@@ -1,0 +1,1 @@
+cmd /c " --config "C:/Program Files (x86)/IAR Systems/Embedded Workbench 7.0/arm/config/linker/ST/stm32f103xB.icf" --no_wrap_diagnostics --semihosting --redirect __iar_sh_stdout=__iar_sh_stdout_swo  && ielftool --ihex --verbose "" ".hex"  "
