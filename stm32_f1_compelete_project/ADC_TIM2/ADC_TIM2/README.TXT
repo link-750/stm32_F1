@@ -1,10 +1,6 @@
-±¾ÊµÑé½«ÊµÏÖÈçÏÂ¹¦ÄÜ£ºÀûÓÃSTM32µÄADC1Í¨µÀ0À´²ÉÑùÍâ²¿µçÑ¹Öµ£¬²¢ÔÚTFTLCDÄ£¿éÉÏÏÔÊ¾³öÀ´¡£ÊµÏÖÒ»¸ö¼òµ¥µÄµçÑ¹±íµÄ¹¦ÄÜ¡£
+æœ¬å®žéªŒå°†å®žçŽ°å¦‚ä¸‹åŠŸèƒ½ï¼šåˆ©ç”¨STM32çš„ADC1é€šé“0æ¥é‡‡æ ·å¤–éƒ¨ç”µåŽ‹å€¼ï¼Œå¹¶åœ¨TFTLCDæ¨¡å—ä¸Šæ˜¾ç¤ºå‡ºæ¥ã€‚å®žçŽ°ä¸€ä¸ªç®€å•çš„ç”µåŽ‹è¡¨çš„åŠŸèƒ½ã€‚
  
-±¾ÊµÑé¿ÉÒÔSWDÏÂÔØ·ÂÕæ.
+æœ¬å®žéªŒå¯ä»¥SWDä¸‹è½½ä»¿çœŸ.
  
-               ÕýµãÔ­×Ó@ALIENTEK
-               2010-12-30
-	       ¹ºÂò£ºhttp://shop62103354.taobao.com
-                     http://shop62057469.taobao.com
-               ¼¼ÊõÖ§³ÖÂÛÌ³£ºwww.openedv.com
+             
            
