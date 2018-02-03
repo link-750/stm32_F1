@@ -1,0 +1,15 @@
+#define PRAGMA(x)                   _Pragma(#x)
+#define ALIGN(n)                    PRAGMA(data_alignment=n)
+
+ALIGN(4)		//保证4字节对齐
+uint16_t freemb_buf[40];
+float32_t  *float_p;
+float_p=&freemb_buf[0];
+
+则float_p[0]访问的是freemb_buf[0]freemb_buf[1]共同占用的空间
+则float_p[1]访问的是freemb_buf[2]freemb_buf[3]共同占用的空间
+*
+*
+*
+则float_p[19]访问的是freemb_buf[38]freemb_buf[39]共同占用的空间
+这样可以节省内存，也可以免于转换uint16_t与float32_t

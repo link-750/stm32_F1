@@ -1,0 +1,37 @@
+#include"stm32f10x.h"
+void main()
+{
+  void delay();//延时函数声明
+  void led_gpio_init();//gpio函数的声明
+  led_gpio_init();//函数的调用
+  while(1)
+  {
+    GPIO_SetBits(GPIOA,GPIO_Pin_1);//a1口为高电平
+    delay();//延时函数的调用
+    GPIO_ResetBits(GPIOA,GPIO_Pin_1);//a1口为低电平
+    delay();//延时函数的调用
+  }
+}
+   void led_gpio_init()
+{
+      RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA,ENABLE);/*使能gpio的rcc时钟*/
+      GPIO_InitTypeDef GPIO_InitStructure;//定义结构体
+      GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+      GPIO_InitStructure.GPIO_Pin=GPIO_Pin_1;//定义引脚0 
+      GPIO_InitStructure.GPIO_Mode=GPIO_Mode_Out_PP;//定义输出模式
+      GPIO_Init(GPIOA,&GPIO_InitStructure);//初始化
+}
+   void delay()//延时函数体
+   {   
+      int temp;
+      SystemInit(); //设置时钟频率为72mhz
+      SysTick->LOAD=0x2255100);//设置重装载值为36000000，也就是0.5ms
+      SysTick->VAL  = 0x00;
+      SysTick->CTRL=0x05;//101,开启定时器使能位
+       do  
+    {  
+       temp = SysTick->CTRL;  //时间到了之后,该位将被硬件置1,但被查询后自动清0  
+    }  
+    while(（temp & 0x01） && !(temp &(1<<16))); //查询  
+   }
+

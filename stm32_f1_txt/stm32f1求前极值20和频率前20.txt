@@ -1,0 +1,35 @@
+/*整体思路：在第一次中找到最大值，将对应的值存到一个数组中，将脚标存到
+另一个数组中，再将最大的值清0，再循环第二次，找最大值，此时最大的值就是第二大的
+值，再对第二大值清0，像这样循环目的次数，基本就可以找到前最大的数个脚标。*/
+  #include"stm32f10x.h"
+  #include<stdio.h>
+  #include"arm_math.h"
+  #define length 2000
+  float32_t or_data[length]={0};//原始数据
+  float32_t te_data[length]={0};//原始数据备份，用于数据操作
+  float32_t max=0,data[2][20]; 
+  void main()
+  {
+        int i,j,k;        
+        for(k=0;k<2000;k++)
+        {
+          te_data[k]=or_data[k];//将原始数据备份到te_data中
+        }        
+       for(j=0;j<20;j++)//找20次就够了，因为每次都是找其中的最大值所对应的\
+                               而找极值的最大20个时，只有2000次之后，排序才能确定                            
+       {                       
+         for(i=0;i<2000;i++)
+        {
+          if(max<te_data[i])
+          {
+            max=te_data[i];
+            data[1][j]=te_data[i];//将最大值存上
+            data[0][j]=i; //将最大值的脚标存上         //jiaobiao[j]=i;
+          }
+        }                        
+        max=0;
+        te_data[(int)data[0][j]]=0;//清除最大值
+       }
+       
+  }
+ 

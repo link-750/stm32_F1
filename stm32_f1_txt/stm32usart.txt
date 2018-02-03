@@ -1,0 +1,66 @@
+  #include"stm32f10x.h"
+  void USART_GPIO_Init();//led灯的gpio函数的声明
+  void NVIC_Configration();//中断控制初始化
+  void USART_Config();
+    void main()
+{  
+  USART_GPIO_Init();
+  USART_Config();
+  NVIC_Configration();//中断控制函数初始化
+  while(1);//等待
+  
+}
+    void USART_GPIO_Init()
+{      
+       RCC_APB2PeriphClockCmd( RCC_APB2Periph_AFIO,ENABLE);//外部复用功能时钟
+       RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA,ENABLE);/*使能a口gpio的rcc时钟*/
+       GPIO_InitTypeDef GPIO_InitStructure;//定义结构体
+       //pa9为ua1的tx端  
+       GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+       GPIO_InitStructure.GPIO_Pin=GPIO_Pin_9;//定义引脚
+       GPIO_InitStructure.GPIO_Mode=GPIO_Mode_AF_PP;//定义输出模式
+       GPIO_Init(GPIOA,&GPIO_InitStructure);//初始化
+       //pa10为ua1的rx端
+       GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+       GPIO_InitStructure.GPIO_Pin=GPIO_Pin_10;//定义引脚
+       GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IN_FLOATING;//定义输出模式
+       GPIO_Init(GPIOA,&GPIO_InitStructure);//初始化
+       
+}
+   void NVIC_Configration()//嵌套向量中断控制器
+   {
+   NVIC_InitTypeDef NVIC_InitStructure;//定义结构体
+   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);//选择优先级组
+   NVIC_InitStructure.NVIC_IRQChannel =USART1_IRQn;//////////////定义属于第7组的中断频道
+   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;//抢占式优先级位
+   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;//从优先级位
+   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;//使能
+   NVIC_Init(&NVIC_InitStructure);////////初始化
+   }
+   void USART_Config()
+   {
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1,ENABLE);
+    USART_InitTypeDef USART_InitStructure;
+    USART_InitStructure.USART_BaudRate = 9600;
+    USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+    USART_InitStructure.USART_StopBits = USART_StopBits_1;
+    USART_InitStructure.USART_Parity = USART_Parity_No;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+    USART_Init(USART1,&USART_InitStructure);  
+    USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);//使能中断
+    USART_ITConfig(USART1,USART_IT_TXE,ENABLE);
+    USART_Cmd(USART1,ENABLE);//使能外设
+   }
+    void USART1_IRQHandler()
+{
+    char c;
+    USART_ClearFlag(USART1,USART_FLAG_RXNE);
+    if(USART_GetFlagStatus(USART1,USART_FLAG_RXNE)==SET)
+    {
+        c = USART_ReceiveData(USART1);
+        USART_SendData(USART1,c);
+    }
+        //while(1);
+}
+   

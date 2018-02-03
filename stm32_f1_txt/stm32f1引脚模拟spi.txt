@@ -1,0 +1,29 @@
+    #define MOSI_H GPIO_SetBits(GPIOB, GPIO_Pin_10)  
+    #define MOSI_L GPIO_ResetBits(GPIOB, GPIO_Pin_10)  
+    #define SCLK_H GPIO_SetBits(GPIOB, GPIO_Pin_13)  
+    #define SCLK_L GPIO_ResetBits(GPIOB, GPIO_Pin_13)  
+    #define MISO GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11)  
+      
+      
+    unsigned char SPI_SendByte(unsigned char dt)  
+    {  
+        u8 i;  
+        u8 temp=0;  
+        for(i=8;i>0;i--)  
+        {  
+            if(dt&0x80)MOSI_H;  
+            else MOSI_L;  
+            dt<<=1;  
+            SCLK_H;  
+            __nop();  
+            __nop();  
+            __nop();  
+            temp<<=1;  
+            if(MISO)temp++;  
+            __nop();  
+            __nop();  
+            __nop();  
+            SCLK_L;  
+        }  
+        return temp;  
+    }  

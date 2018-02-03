@@ -1,0 +1,39 @@
+#include"stm32f10x.h"
+void main()
+{  
+  void led_gpio_init();//led灯的gpio函数的声明
+  void key_gpio_init();//键盘gpio函数的声明
+  key_gpio_init();//键盘函数的调用
+  led_gpio_init();//灯函数的调用
+  while(1)
+  { 
+    if(GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_7)==1)//引脚高低电平读取函数
+    {
+      GPIO_ResetBits(GPIOA,GPIO_Pin_7);//a7口为低电平
+    }
+    else
+    { 
+      GPIO_SetBits(GPIOA,GPIO_Pin_7);//a7口为高电平
+    }
+  }
+}
+   void led_gpio_init()
+{
+     //led
+      RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA,ENABLE);/*使能a口gpio的rcc时钟*/
+      GPIO_InitTypeDef GPIO_InitStructure;//定义结构体
+      GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+      GPIO_InitStructure.GPIO_Pin=GPIO_Pin_7;//定义引脚
+      GPIO_InitStructure.GPIO_Mode=GPIO_Mode_Out_PP;//定义输出模式
+      GPIO_Init(GPIOA,&GPIO_InitStructure);//初始化
+}
+  void key_gpio_init()
+{    
+      //key
+      RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB,ENABLE);/*使能b口gpio的rcc时钟*/
+      GPIO_InitTypeDef GPIO_InitStructure;//定义结构体
+      GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+      GPIO_InitStructure.GPIO_Pin=GPIO_Pin_7;//定义读取引脚
+      GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IPU;//定义上拉输入模式
+      GPIO_Init(GPIOB,&GPIO_InitStructure);//初始化
+}

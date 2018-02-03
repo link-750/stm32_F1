@@ -1,0 +1,133 @@
+  #include"stm32f10x.h"
+  void USART_GPIO_Init();//led灯的gpio函数的声明 
+  void USART_Config();
+  void RCC_Configuration();
+  void IIC_Init();
+  void I2C_ByteWrite(u8 EEPROM_ADDRESS,u8 WriteAddr,u8 *pBuffer );
+  void I2C_ByteRead(u8 EEPROM_ADDRESS,u8 ReadAddr,u16 NumByteToRead);
+  u8 pBuffer[1]={0x08};
+  u8 pBuffer1=0;
+    void main()
+     { 
+       
+       RCC_Configuration();
+       USART_GPIO_Init();
+       USART_Config(); 
+       IIC_Init();//初始化配置I2C
+       while(1)//等待
+       {
+         ;
+       }  
+     }
+    void RCC_Configuration()
+    {
+      RCC_APB2PeriphClockCmd( RCC_APB2Periph_AFIO,ENABLE);//外部复用功能时钟
+      RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOB,ENABLE);/*使能a口gpio的rcc时钟*/
+      RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1,ENABLE);
+      RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1,ENABLE);
+    }
+    void IIC_Init()//初始化配置I2C
+    {
+      //I2C端口配置
+      GPIO_InitTypeDef GPIO_InitStructure;//定义结构体
+      //pb10为SCL 
+      GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+      GPIO_InitStructure.GPIO_Pin=GPIO_Pin_6|GPIO_Pin_7;//定义引脚, //pb10为SCL //pb11为SDA
+      GPIO_InitStructure.GPIO_Mode=GPIO_Mode_AF_OD;//定义输出模式
+      GPIO_Init(GPIOB,&GPIO_InitStructure);//初始化   
+      
+      //I2C初始化
+      I2C_InitTypeDef I2C_InitStructure;
+      I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;//配置I2C模式
+      I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;//该参数只有I2c工作在快速模式（>100KHZ）下才有意义
+      I2C_InitStructure.I2C_OwnAddress1 = 0xA0;//设置第一个设备自身地址
+      I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;//使能应答
+      I2C_InitStructure.I2C_AcknowledgedAddress =I2C_AcknowledgedAddress_7bit;//地址为多少位就设置几      
+      I2C_InitStructure.I2C_ClockSpeed = 200000;//时钟速率，以Hz为单位，最高为400KHZ
+      I2C_Init(I2C1, &I2C_InitStructure);//初始化完成
+      I2C_Cmd(I2C1, ENABLE);//启用外设I2C1
+    }
+    //向指定器件的指定位置写入指定数据
+    void I2C_ByteWrite(u8 EEPROM_ADDRESS,u8 WriteAddr,u8 *pBuffer )//从EEprom中读取一块数据
+    {
+      while(I2C_GetFlagStatus(I2C1, I2C_FLAG_BUSY));//检测I2c总线是否忙碌
+      I2C_GenerateSTART(I2C1, ENABLE);//开启信号
+      while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT));//等待完成EV5
+      I2C_Send7bitAddress(I2C1, EEPROM_ADDRESS, I2C_Direction_Transmitter);//写入器件地址
+      while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));//等待EV6完成
+      I2C_SendData(I2C1, WriteAddr); //发送寄存器的地址
+      while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED));//等待EV8完成，寄存器地址发送完成并清理事件
+      I2C_SendData(I2C1, 0x08);//传送具体数据                    //发送要写入的内容
+      while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED)); //等待数据完成并清理数据   
+      I2C_GenerateSTOP(I2C1, ENABLE);          //发送结束信号
+     }
+      //向指定的器件里读取指定的寄存器中读取相关的数据
+    void I2C_ByteRead(u8 EEPROM_ADDRESS,u8 ReadAddr,u16 NumByteToRead)
+    {
+      while(I2C_GetFlagStatus(I2C1, I2C_FLAG_BUSY));//检测I2c总线是否忙碌
+      I2C_GenerateSTART(I2C1, ENABLE);//开启信号
+      while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT));//等待完成EV5
+      I2C_Send7bitAddress(I2C1, EEPROM_ADDRESS, I2C_Direction_Transmitter);//写入器件地址
+      while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));//等待相关的地址发送完成并清理事件
+      I2C_SendData(I2C1, ReadAddr);//发送读取寄存器的地址
+      while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+      
+      I2C_GenerateSTART(I2C1, ENABLE);      
+      while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT));
+      
+     
+      I2C_Send7bitAddress(I2C1, EEPROM_ADDRESS, I2C_Direction_Receiver);//将处理器设为接受方
+     
+      while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED));
+      while(NumByteToRead)//需要读的字节数
+      {
+        
+         if(NumByteToRead == 1)
+       {        
+        I2C_AcknowledgeConfig(I2C1, DISABLE);         
+        I2C_GenerateSTOP(I2C1, ENABLE);
+       }
+        
+        if(I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED))
+       {        
+        pBuffer1 = I2C_ReceiveData(I2C1);            
+        pBuffer1++;  //指向下一个需要读取的字节的位置并将保存           
+        NumByteToRead--;
+       }
+     }        
+        I2C_AcknowledgeConfig(I2C1, ENABLE);//使能应答功能，为另一个接受准备         
+      
+    }
+    
+    void USART_GPIO_Init()
+{       
+      
+       GPIO_InitTypeDef GPIO_InitStructure;//定义结构体
+       //pa9为ua1的tx端  
+       GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+       GPIO_InitStructure.GPIO_Pin=GPIO_Pin_9;//定义引脚
+       GPIO_InitStructure.GPIO_Mode=GPIO_Mode_AF_PP;//定义输出模式
+       GPIO_Init(GPIOA,&GPIO_InitStructure);//初始化
+       //pa10为ua1的rx端
+       GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+       GPIO_InitStructure.GPIO_Pin=GPIO_Pin_10;//定义引脚
+       GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IN_FLOATING;//定义输出模式
+       GPIO_Init(GPIOA,&GPIO_InitStructure);//初始化
+       
+}
+  
+   void USART_Config()
+   {    
+    USART_InitTypeDef USART_InitStructure;
+    USART_InitStructure.USART_BaudRate = 9600;
+    USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+    USART_InitStructure.USART_StopBits = USART_StopBits_1;
+    USART_InitStructure.USART_Parity = USART_Parity_No;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+    USART_Init(USART1,&USART_InitStructure);  
+    USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);//使能中断
+    USART_ITConfig(USART1,USART_IT_TXE,ENABLE);
+    USART_Cmd(USART1,ENABLE);//使能外设
+   }
+   

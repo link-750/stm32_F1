@@ -1,0 +1,139 @@
+  #include"stm32f10x.h"
+  #include<stdio.h>
+
+  void USART_gpio_init();//led灯的gpio函数的声明
+  void USART_Configuration();
+  void RCC_Configuration();
+  void ADC_Configuration();
+  void delay();
+  void TIM2_Configuration();
+  //u32 ADCData[50];//u16代表16位二进制来代表数据，因为ad一般只为12位来表示，所以定义16位足够
+  void main()
+{  
+  float ad,j;
+  int i=0;
+  RCC_Configuration();
+  USART_gpio_init();
+  USART_Configuration();
+  ADC_Configuration();
+  TIM2_Configuration();
+  while(1)
+  {
+      ad=0;     
+      delay();//调用延时函数1s       
+      ad=(3300*(float)ADC_GetConversionValue(ADC1))/4095000;     
+      printf("%f\t",ad);
+      
+     
+    }
+                        
+}
+    int fputc(int ch,FILE *f)
+   {
+   //ch送给USART1
+    USART_SendData(USART1, ch);
+    //等待发送完毕
+    while(USART_GetFlagStatus(USART1, USART_FLAG_TC)==RESET) { }
+    //返回ch
+    return(ch);
+    }
+  
+    void RCC_Configuration()
+    {
+        SystemInit();
+        RCC_APB2PeriphClockCmd( RCC_APB2Periph_AFIO,ENABLE);//外部复用功能时钟
+        RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA,ENABLE);/*使能a口gpio的rcc时钟*/
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1,ENABLE);
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1,ENABLE);
+        RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); //TIM2时钟开启 
+        RCC_ADCCLKConfig(RCC_PCLK2_Div6);//12M
+    }
+     void TIM2_Configuration()
+    {
+      TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;//时钟结构体配置
+      TIM_TimeBaseStructure.TIM_Period =0x2710;//时钟的周期  
+      TIM_TimeBaseStructure.TIM_Prescaler = 719;    //设置预分频：预分频=，即为72/6=12MHz  
+      TIM_TimeBaseStructure.TIM_ClockDivision = 0; //设置时钟分频系数：不分频  
+      TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;//向上计数溢出模式  
+      TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure); //初始化 
+      
+      TIM_OCInitTypeDef  TIM_OCInitStructure;
+      TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1; //配置为PWM模式1  
+      TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;//定义输出使能                
+      TIM_OCInitStructure.TIM_Pulse = 0x1388;  //设置跳变值，当计数器计数到这个值时，电平发生跳变  
+      TIM_OCInitStructure.TIM_OCPolarity =TIM_OCPolarity_Low;//当定时器计数值小于CCR1时为高电平  
+      TIM_OC2Init(TIM2, &TIM_OCInitStructure); //使能通道2,oc1为通道1，oc2为通道2 output Chanel X（1.2.3.4），通道2在没有重映射的情况下对应pa7口，所以在gpio的配置中要配置pa7口
+      TIM_OC2PreloadConfig(TIM2, TIM_OCPreload_Enable);//使能TIM3在ccr2上的预装载寄存器 
+      TIM_ARRPreloadConfig(TIM2, ENABLE); //使能TIM3重载寄存器ARR  
+      /* TIM3 enable counter */  
+      TIM_Cmd(TIM2, ENABLE);//使能TIM3 
+      TIM_InternalClockConfig(TIM2);
+      TIM_UpdateDisableConfig(TIM2,DISABLE);
+      
+    }
+    void USART_gpio_init()
+{      
+       
+       GPIO_InitTypeDef GPIO_InitStructure;//定义结构体
+       //pa9为ua1的tx端  
+       GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+       GPIO_InitStructure.GPIO_Pin=GPIO_Pin_9;//定义引脚
+       GPIO_InitStructure.GPIO_Mode=GPIO_Mode_AF_PP;//定义输出模式
+       GPIO_Init(GPIOA,&GPIO_InitStructure);//初始化
+       //pa10为ua1的rx端
+       GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+       GPIO_InitStructure.GPIO_Pin=GPIO_Pin_10;//定义引脚
+       GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IN_FLOATING;//定义输出模式
+       GPIO_Init(GPIOA,&GPIO_InitStructure);//初始化
+       //ad口
+       GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//定义引脚速度
+       GPIO_InitStructure.GPIO_Pin=GPIO_Pin_2;//定义引脚
+       GPIO_InitStructure.GPIO_Mode=GPIO_Mode_AIN;//定义输出模式-模拟输入
+       GPIO_Init(GPIOA,&GPIO_InitStructure);//初始化
+            
+}
+   
+   void USART_Configuration()
+   {
+   
+    USART_InitTypeDef USART_InitStructure;
+    USART_InitStructure.USART_BaudRate = 9600;
+    USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+    USART_InitStructure.USART_StopBits = USART_StopBits_1;
+    USART_InitStructure.USART_Parity = USART_Parity_No;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode = USART_Mode_Tx;
+    USART_Init(USART1,&USART_InitStructure);  
+    USART_Cmd(USART1,ENABLE);//使能外设   
+    USART_ClearFlag(USART1,USART_FLAG_TC);//清除待处理标志位USART_Cmd(USART1,ENABLE);//使能外设
+    
+   }
+
+    void ADC_Configuration()
+    {
+    ADC_InitTypeDef ADC_InitStructure;//模式配置
+    ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;//独立模式
+    ADC_InitStructure.ADC_ScanConvMode = DISABLE;//单通道的单次模式
+    ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;//循环模式
+    ADC_InitStructure.ADC_ExternalTrigConv =ADC_ExternalTrigConv_T2_CC2;//软件触发
+    ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;//右对齐
+    ADC_InitStructure.ADC_NbrOfChannel = 1;//规定了顺序进行规则转换的 ADC 通道的数目。这个数目的取值范围是 1 到 16。
+    ADC_Init(ADC1, &ADC_InitStructure);//
+    
+    ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 1,ADC_SampleTime_28Cycles5);//设置指定 ADC 的规则组通道，设置它们的转化顺序和采样时间
+   
+    ADC_Cmd(ADC1, ENABLE);//
+    
+    ADC_ResetCalibration(ADC1);//重置指定的 ADC 的校准寄存器
+    while(ADC_GetResetCalibrationStatus(ADC1));//直到重置成功    
+    ADC_StartCalibration(ADC1);//开始指定 ADC 的校准状态
+    while(ADC_GetCalibrationStatus(ADC1));//获取指定 ADC 的校准程序    
+    ADC_SoftwareStartConvCmd(ADC1, ENABLE);//使能或者失能指定的 ADC 的软件转换启动功能 
+   
+    }
+
+     void delay()
+     {
+         int i=0;
+         for(i=0;i<=12000000;i++);
+     }

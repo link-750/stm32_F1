@@ -1,0 +1,465 @@
+###############################################################################
+#
+# IAR ELF Linker V7.70.1.11437/W32 for ARM                12/Apr/2017  15:12:03
+# Copyright 2007-2016 IAR Systems AB.
+#
+#    Output file  =  
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Exe\stm32_01.out
+#    Map file     =  
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\List\stm32_01.map
+#    Command line =  
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\flash.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\main.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\misc.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\spi.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\startup_stm32f10x_md.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_adc.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_bkp.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_can.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_cec.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_crc.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_dac.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_dbgmcu.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_dma.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_exti.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_flash.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_fsmc.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_gpio.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_i2c.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_iwdg.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_pwr.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_rcc.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_rtc.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_sdio.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_spi.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_tim.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_usart.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\stm32f10x_wwdg.o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj\system_stm32f10x.o
+#        --redirect _Printf=_PrintfFull --redirect _Scanf=_ScanfFull -o
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Exe\stm32_01.out
+#        --map
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\List\stm32_01.map
+#        --log call_graph --log_file
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\List\stm32_01.log
+#        --config
+#        C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\stm32f10x_flash.icf
+#        --semihosting --entry __iar_program_start --vfe
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor                     = *
+__Heap_Handler                = Basic
+__SystemLibrary               = DLib
+__dlib_dynamic_initialization = normal
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A0":  place at 0x08010000 { ro section .intvec };
+"P1":  place in [from 0x08010000 to 0x080fffff] { ro };
+"P2":  place in [from 0x20000000 to 0x20017fff] { rw, block CSTACK, block HEAP };
+initialize by copy { rw };
+
+  Section             Kind        Address    Size  Object
+  -------             ----        -------    ----  ------
+"A0":                                        0xec
+  .intvec             ro code  0x08010000    0xec  startup_stm32f10x_md.o [1]
+                             - 0x080100ec    0xec
+
+"P1":                                      0x2b42
+  .text               ro code  0x080100ec  0x118a  xprintffull.o [3]
+  .text               ro code  0x08011276    0x20  xmbtowc.o [3]
+  .text               ro code  0x08011298    0x16  strchr.o [5]
+  .text               ro code  0x080112b0    0x36  strlen.o [5]
+  .text               ro code  0x080112e8    0x58  memchr.o [5]
+  .text               ro code  0x08011340     0xa  xmbcurmax.o [3]
+  .text               ro code  0x0801134c    0xb0  xxmemxmalloc.o [3]
+  .text               ro code  0x080113fc    0x1a  xwctomb.o [3]
+  .text               ro code  0x08011418    0x76  ABImemcpy_unaligned.o [5]
+  .text               ro code  0x08011490    0x80  xxmemxfree.o [3]
+  .text               ro code  0x08011510    0xee  I64DivMod.o [5]
+  .text               ro code  0x080115fe    0x44  xdnorm.o [4]
+  .text               ro code  0x08011644    0x2e  DblCmpLe.o [4]
+  .text               ro code  0x08011674    0x2e  DblCmpGe.o [4]
+  .text               ro code  0x080116a4   0x10c  xdscale.o [4]
+  .text               ro code  0x080117b0    0x58  DblToI32.o [4]
+  .text               ro code  0x08011808    0x30  I32ToDbl.o [4]
+  .text               ro code  0x08011838   0x180  DblSub.o [4]
+  .text               ro code  0x080119b8   0x1a2  DblMul.o [4]
+  .text               ro code  0x08011b5c   0x256  DblDiv.o [4]
+  .text               ro code  0x08011db4    0x6c  localeconv.o [3]
+  .text               ro code  0x08011e20     0xe  div.o [3]
+  .text               ro code  0x08011e30    0x14  setlocale.o [3]
+  .text               ro code  0x08011e44    0x60  xencoding_sb.o [3]
+  .text               ro code  0x08011ea4    0x2c  xgetmemchunk.o [3]
+  .text               ro code  0x08011ed0     0x2  I64DivZer.o [5]
+  .text               ro code  0x08011ed4    0xd4  DblAdd.o [4]
+  .text               ro code  0x08011fa8     0x2  xtls.o [3]
+  .text               ro code  0x08011fac   0x31a  flash.o [1]
+  .text               ro code  0x080122c8   0x128  stm32f10x_rcc.o [1]
+  .text               ro code  0x080123f0    0xe2  stm32f10x_gpio.o [1]
+  .text               ro code  0x080124d4    0xa8  spi.o [1]
+  .text               ro code  0x0801257c   0x174  main.o [1]
+  .text               ro code  0x080126f0    0x24  printf.o [3]
+  .text               ro code  0x08012714   0x15c  stm32f10x_usart.o [1]
+  .text               ro code  0x08012870   0x158  system_stm32f10x.o [1]
+  .text               ro code  0x080129c8    0x40  zero_init3.o [5]
+  .text               ro code  0x08012a08    0x38  packbits_init_single.o [5]
+  .text               ro code  0x08012a40    0x28  data_init.o [5]
+  .iar.init_table     const    0x08012a68    0x20  - Linker created -
+  .text               ro code  0x08012a88    0x1a  cmain.o [5]
+  .text               ro code  0x08012aa2     0x4  low_level_init.o [3]
+  .text               ro code  0x08012aa6     0x4  exit.o [3]
+  .text               ro code  0x08012aac     0xa  cexit.o [5]
+  .text               ro code  0x08012ab8    0x14  exit.o [6]
+  .text               ro code  0x08012acc    0x16  xprout.o [3]
+  .text               ro code  0x08012ae4     0xc  putchar.o [3]
+  .text               ro code  0x08012af0    0x10  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b00     0xc  cstartup_M.o [5]
+  .rodata             const    0x08012b0c     0x8  main.o [1]
+  .rodata             const    0x08012b14     0x8  main.o [1]
+  .text               ro code  0x08012b1c     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b20     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b24     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b28     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b2c     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b30     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b34     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b38     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b3c     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b40     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b44     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b48     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b4c     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b50     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b54     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b58     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b5c     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b60     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b64     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b68     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b6c     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b70     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b74     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b78     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b7c     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b80     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b84     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b88     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b8c     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b90     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b94     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b98     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012b9c     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012ba0     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012ba4     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012ba8     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bac     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bb0     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bb4     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bb8     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bbc     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bc0     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bc4     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bc8     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bcc     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bd0     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bd4     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bd8     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012bdc     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012be0     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012be4     0x4  startup_stm32f10x_md.o [1]
+  .text               ro code  0x08012be8     0x4  startup_stm32f10x_md.o [1]
+  .rodata             const    0x08012bec     0x0  zero_init3.o [5]
+  .rodata             const    0x08012bec     0x0  packbits_init_single.o [5]
+  Initializer bytes   const    0x08012bec    0x42  <for P2-1>
+                             - 0x08012c2e  0x2b42
+
+"P2", part 1 of 3:                          0x152
+  P2-1                         0x20000000   0x152  <Init block>
+    .data             inited   0x20000000    0x10  stm32f10x_rcc.o [1]
+    .data             inited   0x20000010     0x4  stm32f10x_rcc.o [1]
+    .data             inited   0x20000014    0x40  xfiles.o [3]
+    __DLIB_PERTHREAD  inited   0x20000054    0x88  localeconv.o [3]
+    __DLIB_PERTHREAD  inited   0x200000dc    0x74  setlocale.o [3]
+    .data             inited   0x20000150     0x2  flash.o [1]
+                             - 0x20000152   0x152
+
+"P2", part 2 of 3:                          0x700
+  CSTACK                       0x20000158   0x500  <Block>
+    CSTACK            uninit   0x20000158   0x500  <Block tail>
+  HEAP                         0x20000658   0x200  <Block>
+    HEAP              uninit   0x20000658   0x200  <Block tail>
+                             - 0x20000858   0x700
+
+"P2", part 3 of 3:                         0x105c
+  .bss                zero     0x20000858  0x1000  flash.o [1]
+  .bss                zero     0x20001858    0x50  xfiles.o [3]
+  .bss                zero     0x200018a8     0x8  xxmemxmalloc.o [3]
+  .bss                zero     0x200018b0     0x4  xgetmemchunk.o [3]
+                             - 0x200018b4  0x105c
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address     Size
+          -------     ----
+Zero (__iar_zero_init3)
+    1 destination range, total size 0x105c:
+          0x20000858  0x105c
+
+Copy/packbits (__iar_packbits_init_single3)
+    1 source range, total size 0x42 (19% of destination):
+          0x08012bec    0x42
+    1 destination range, total size 0x152:
+          0x20000000   0x152
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                  ro code  ro data  rw data
+    ------                  -------  -------  -------
+C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj: [1]
+    flash.o                     794        1    4 098
+    main.o                      372       16
+    spi.o                       168
+    startup_stm32f10x_md.o      460
+    stm32f10x_gpio.o            226
+    stm32f10x_rcc.o             296        3       20
+    stm32f10x_usart.o           348
+    system_stm32f10x.o          344
+    -------------------------------------------------
+    Total:                    3 008       20    4 118
+
+command line: [2]
+    -------------------------------------------------
+    Total:
+
+dl7M_tlf.a: [3]
+    div.o                        14
+    exit.o                        4
+    localeconv.o                108       26      136
+    low_level_init.o              4
+    printf.o                     36
+    putchar.o                    12
+    setlocale.o                  20       23      116
+    xencoding_sb.o               96
+    xfiles.o                              13      144
+    xgetmemchunk.o               44                 4
+    xmbcurmax.o                  10
+    xmbtowc.o                    32
+    xprintffull.o             4 490
+    xprout.o                     22
+    xtls.o                        2
+    xwctomb.o                    26
+    xxmemxfree.o                128
+    xxmemxmalloc.o              176                 8
+    -------------------------------------------------
+    Total:                    5 224       62      408
+
+m7M_tl.a: [4]
+    DblAdd.o                    212
+    DblCmpGe.o                   46
+    DblCmpLe.o                   46
+    DblDiv.o                    598
+    DblMul.o                    418
+    DblSub.o                    384
+    DblToI32.o                   88
+    I32ToDbl.o                   48
+    xdnorm.o                     68
+    xdscale.o                   268
+    -------------------------------------------------
+    Total:                    2 176
+
+rt7M_tl.a: [5]
+    ABImemcpy_unaligned.o       118
+    I64DivMod.o                 238
+    I64DivZer.o                   2
+    cexit.o                      10
+    cmain.o                      26
+    cstartup_M.o                 12
+    data_init.o                  40
+    memchr.o                     88
+    packbits_init_single.o       56
+    strchr.o                     22
+    strlen.o                     54
+    zero_init3.o                 64
+    -------------------------------------------------
+    Total:                      730
+
+shb_l.a: [6]
+    exit.o                       20
+    -------------------------------------------------
+    Total:                       20
+
+    Gaps                         38
+    Linker created                        32    1 792
+-----------------------------------------------------
+    Grand Total:             11 196      114    6 318
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address    Size  Type      Object
+-----                      -------    ----  ----      ------
+.iar.init_table$$Base   0x08012a68           --   Gb  - Linker created -
+.iar.init_table$$Limit  0x08012a88           --   Gb  - Linker created -
+?main                   0x08012a89          Code  Gb  cmain.o [5]
+ADCPrescTable           0x20000010     0x4  Data  Lc  stm32f10x_rcc.o [1]
+APBAHBPrescTable        0x20000000    0x10  Data  Lc  stm32f10x_rcc.o [1]
+CSTACK$$Base            0x20000158           --   Gb  - Linker created -
+CSTACK$$Limit           0x20000658           --   Gb  - Linker created -
+GPIO_Init               0x080123f1    0xc0  Code  Gb  stm32f10x_gpio.o [1]
+GPIO_ReadInputDataBit   0x080124b1    0x16  Code  Gb  stm32f10x_gpio.o [1]
+GPIO_ResetBits          0x080124cd     0x6  Code  Gb  stm32f10x_gpio.o [1]
+GPIO_SetBits            0x080124c7     0x6  Code  Gb  stm32f10x_gpio.o [1]
+HEAP$$Base              0x20000658           --   Gb  - Linker created -
+HEAP$$Limit             0x20000858           --   Gb  - Linker created -
+LoadInt                 0x08010753    0x6e  Code  Lc  xprintffull.o [3]
+RCC_ADCCLKConfig        0x080122c9    0x12  Code  Gb  stm32f10x_rcc.o [1]
+RCC_AHBPeriphClockCmd   0x08012395    0x20  Code  Gb  stm32f10x_rcc.o [1]
+RCC_APB2PeriphClockCmd  0x080123b5    0x20  Code  Gb  stm32f10x_rcc.o [1]
+RCC_Configuration       0x080125f9    0x3c  Code  Gb  main.o [1]
+RCC_GetClocksFreq       0x080122db    0xba  Code  Gb  stm32f10x_rcc.o [1]
+Region$$Table$$Base     0x08012a68           --   Gb  - Linker created -
+Region$$Table$$Limit    0x08012a88           --   Gb  - Linker created -
+SPI1_Init               0x080124d5    0x48  Code  Gb  spi.o [1]
+SPI1_ReadWriteByte      0x0801251d    0x5c  Code  Gb  spi.o [1]
+SPI_FLASH_BUF           0x20000858  0x1000  Data  Gb  flash.o [1]
+SPI_FLASH_TYPE          0x20000150     0x2  Data  Gb  flash.o [1]
+SPI_FLASH_Write_Enable  0x08012013    0x1a  Code  Gb  flash.o [1]
+SPI_Flash_Erase_Sector  0x0801225f    0x46  Code  Gb  flash.o [1]
+SPI_Flash_Init          0x08011fad    0x3e  Code  Gb  flash.o [1]
+SPI_Flash_Read          0x08012071    0x54  Code  Gb  flash.o [1]
+SPI_Flash_ReadID        0x0801202d    0x44  Code  Gb  flash.o [1]
+SPI_Flash_ReadSR        0x08011feb    0x28  Code  Gb  flash.o [1]
+SPI_Flash_Wait_Busy     0x080122a5     0xc  Code  Gb  flash.o [1]
+SPI_Flash_Write         0x08012173    0xec  Code  Gb  flash.o [1]
+SPI_Flash_Write_NoCheck
+                        0x0801211f    0x54  Code  Gb  flash.o [1]
+SPI_Flash_Write_Page    0x080120c5    0x5a  Code  Gb  flash.o [1]
+SetSysClock             0x080128c5     0x8  Code  Lc  system_stm32f10x.o [1]
+SetSysClockTo72         0x080128cd    0xe0  Code  Lc  system_stm32f10x.o [1]
+SystemInit              0x08012871    0x54  Code  Gb  system_stm32f10x.o [1]
+TEXT_Buffer             0x08012b14     0x8  Data  Gb  main.o [1]
+USART_ClearFlag         0x08012865     0xc  Code  Gb  stm32f10x_usart.o [1]
+USART_Cmd               0x080127d5    0x1c  Code  Gb  stm32f10x_usart.o [1]
+USART_Configuration     0x0801268b    0x50  Code  Gb  main.o [1]
+USART_GetFlagStatus     0x0801284b    0x1a  Code  Gb  stm32f10x_usart.o [1]
+USART_ITConfig          0x080127f1    0x52  Code  Gb  stm32f10x_usart.o [1]
+USART_Init              0x08012715    0xba  Code  Gb  stm32f10x_usart.o [1]
+USART_SendData          0x08012843     0x8  Code  Gb  stm32f10x_usart.o [1]
+USART_gpio_init         0x08012635    0x56  Code  Gb  main.o [1]
+_EncodingSb_Mbtowc      0x08011e5f    0x30  Code  Gb  xencoding_sb.o [3]
+_EncodingSb_Mbtowc::initial
+                        0x08011e9c     0x8  Data  Lc  xencoding_sb.o [3]
+_EncodingSb_Wctomb      0x08011e45    0x1a  Code  Gb  xencoding_sb.o [3]
+_EncodingSb_Wctomb::initial
+                        0x08011e94     0x8  Data  Lc  xencoding_sb.o [3]
+_GenldFull              0x08010fd9   0x254  Code  Lc  xprintffull.o [3]
+_IsdstStr               0x200000e0     0x4  Data  Gb  setlocale.o [3]
+_LdtobFull              0x08010bd9   0x3fa  Code  Lc  xprintffull.o [3]
+_LitobFull              0x08010acd   0x10a  Code  Lc  xprintffull.o [3]
+_LocaleEncoding         0x08011e31     0xe  Code  Gb  setlocale.o [3]
+_LocaleReturnString     0x20000100    0x50  Data  Lc  setlocale.o [3]
+_Locale_Profile         0x200000e4    0x1c  Data  Gb  setlocale.o [3]
+_Locale_aeabi_lconv     0x200000a4    0x38  Data  Gb  localeconv.o [3]
+_Locale_lconv           0x20000054    0x50  Data  Gb  localeconv.o [3]
+_Mbtowc                 0x08011277    0x20  Code  Gb  xmbtowc.o [3]
+_PrintfFull             0x080100ed   0x650  Code  Gb  xprintffull.o [3]
+_Prout                  0x08012acd    0x16  Code  Gb  xprout.o [3]
+_PutcharsFull           0x0801122d    0x2e  Code  Lc  xprintffull.o [3]
+_PutstrFull             0x080107c1   0x306  Code  Lc  xprintffull.o [3]
+_TzoneStr               0x200000dc     0x4  Data  Gb  setlocale.o [3]
+_Wctomb                 0x080113fd    0x1a  Code  Gb  xwctomb.o [3]
+__aeabi_cdcmple         0x08011645          Code  Gb  DblCmpLe.o [4]
+__aeabi_cdrcmple        0x08011675          Code  Gb  DblCmpGe.o [4]
+__aeabi_d2iz            0x080117b1          Code  Gb  DblToI32.o [4]
+__aeabi_d2uiz           0x080117dd          Code  Gb  DblToI32.o [4]
+__aeabi_ddiv            0x08011b5d          Code  Gb  DblDiv.o [4]
+__aeabi_dmul            0x080119b9          Code  Gb  DblMul.o [4]
+__aeabi_dsub            0x08011839          Code  Gb  DblSub.o [4]
+__aeabi_i2d             0x08011809          Code  Gb  I32ToDbl.o [4]
+__aeabi_ldiv0           0x08011ed1          Code  Gb  I64DivZer.o [5]
+__aeabi_ui2d            0x0801181d          Code  Gb  I32ToDbl.o [4]
+__aeabi_uldivmod        0x08011511          Code  Gb  I64DivMod.o [5]
+__cmain                 0x08012a89          Code  Gb  cmain.o [5]
+__data_Aldata           0x200018a8     0x8  Data  Gb  xxmemxmalloc.o [3]
+__data_GetMemChunk      0x08011ea5    0x2c  Code  Gb  xgetmemchunk.o [3]
+__data_GetMemChunk::start
+                        0x200018b0     0x4  Data  Lc  xgetmemchunk.o [3]
+__exit                  0x08012ab9    0x14  Code  Gb  exit.o [6]
+__iar_Dnorm             0x080115ff    0x44  Code  Gb  xdnorm.o [4]
+__iar_Dscale            0x080116a5   0x10c  Code  Gb  xdscale.o [4]
+__iar_Locale_lconv_init
+                        0x08011db5    0x3a  Code  Gb  localeconv.o [3]
+__iar_Mbcurmax          0x08011341     0xa  Code  Gb  xmbcurmax.o [3]
+__iar_Memchr            0x080112e9          Code  Gb  memchr.o [5]
+__iar_Stdout            0x20000014    0x40  Data  Gb  xfiles.o [3]
+__iar_Strchr            0x08011299          Code  Gb  strchr.o [5]
+__iar_d2uiz             0x080117e9          Code  Gb  DblToI32.o [4]
+__iar_dadd              0x08011ed5          Code  Gb  DblAdd.o [4]
+__iar_data_init3        0x08012a41    0x28  Code  Gb  data_init.o [5]
+__iar_dlib_perthread_access
+                        0x08011fa9     0x2  Code  Gb  xtls.o [3]
+__iar_dsub              0x0801184d          Code  Gb  DblSub.o [4]
+__iar_dsubStart         0x0801185f          Code  Gb  DblSub.o [4]
+__iar_packbits_init_single3
+                        0x08012a09    0x38  Code  Gb  packbits_init_single.o [5]
+__iar_program_start     0x08012b01          Code  Gb  cstartup_M.o [5]
+__iar_ui2d              0x08011821          Code  Gb  I32ToDbl.o [4]
+__iar_unaligned___aeabi_memcpy
+                        0x08011419          Code  Gb  ABImemcpy_unaligned.o [5]
+__iar_unaligned___aeabi_memcpy4
+                        0x08011439          Code  Gb  ABImemcpy_unaligned.o [5]
+__iar_unaligned___aeabi_memcpy8
+                        0x08011439          Code  Gb  ABImemcpy_unaligned.o [5]
+__iar_zero_init3        0x080129c9    0x40  Code  Gb  zero_init3.o [5]
+__low_level_init        0x08012aa3     0x4  Code  Gb  low_level_init.o [3]
+__vector_table          0x08010000          Data  Gb  startup_stm32f10x_md.o [1]
+_call_main              0x08012a95          Code  Gb  cmain.o [5]
+_exit                   0x08012aad          Code  Gb  cexit.o [5]
+_main                   0x08012a9f          Code  Gb  cmain.o [5]
+delay_us                0x080122bd     0xa  Code  Gb  flash.o [1]
+div                     0x08011e21     0xe  Code  Gb  div.o [3]
+exit                    0x08012aa7     0x4  Code  Gb  exit.o [3]
+fputc                   0x080125d9    0x20  Code  Gb  main.o [1]
+free                    0x08011491    0x7a  Code  Gb  xxmemxfree.o [3]
+localeconv              0x08011def    0x16  Code  Gb  localeconv.o [3]
+main                    0x0801257d    0x5c  Code  Gb  main.o [1]
+malloc                  0x0801134d    0xac  Code  Gb  xxmemxmalloc.o [3]
+memchr                  0x080112e9          Code  Gb  memchr.o [5]
+obuf                    0x20001858    0x50  Data  Lc  xfiles.o [3]
+printf                  0x080126f1    0x24  Code  Gb  printf.o [3]
+putchar                 0x08012ae5     0xc  Code  Gb  putchar.o [3]
+strchr                  0x08011299          Code  Gb  strchr.o [5]
+strlen                  0x080112b1          Code  Gb  strlen.o [5]
+
+
+[1] = C:\Users\Administrator\Desktop\标准程序收集\stm32f1实现模拟spi\Debug\Obj
+[2] = command line
+[3] = dl7M_tlf.a
+[4] = m7M_tl.a
+[5] = rt7M_tl.a
+[6] = shb_l.a
+
+  11 196 bytes of readonly  code memory
+     114 bytes of readonly  data memory
+   6 318 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

@@ -1,0 +1,164 @@
+#include"stm32f10x.h" //包含所有的头文件      注意波特率
+#include<stdio.h>
+
+ 
+
+/*******************************位绑定定义*****************************************/
+//#define GPIOA_ODR_A  (GPIOA_BASE+0x0C)
+//#define GPIOA_IDR_A  (GPIOA_BASE+0x08)
+//#define GPIOB_ODR_A  (GPIOB_BASE+0x0C)
+//#define GPIOB_IDR_A  (GPIOB_BASE+0x08)
+//#define GPIOC_ODR_A  (GPIOC_BASE+0x0C)
+//#define GPIOC_IDR_A  (GPIOC_BASE+0x08)
+//#define GPIOD_ODR_A  (GPIOD_BASE+0x0C)
+//#define GPIOD_IDR_A  (GPIOD_BASE+0x08)
+//#define GPIOE_ODR_A  (GPIOE_BASE+0x0C)
+//#define GPIOE_IDR_A  (GPIOE_BASE+0x08)
+//
+//#define BitBand(Addr,BitNum)    *((volatile unsigned long *)((Addr&0xF0000000)+0x2000000+((Addr&0xfffff)<<5)+(BitNum<<2)))
+//
+//#define PAout(n)   BitBand(GPIOA_ODR_A,n)
+//#define PAin(n)    BitBand(GPIOA_IDR_A,n)
+//#define PBout(n)   BitBand(GPIOB_ODR_A,n)
+//#define PBin(n)    BitBand(GPIOB_IDR_A,n)
+//#define PCout(n)   BitBand(GPIOC_ODR_A,n)
+//#define PCin(n)    BitBand(GPIOC_IDR_A,n)
+//#define PDout(n)   BitBand(GPIOD_ODR_A,n)
+//#define PDin(n)    BitBand(GPIOD_IDR_A,n)
+//#define PEout(n)   BitBand(GPIOE_ODR_A,n)
+//#define PEin(n)    BitBand(GPIOE_IDR_A,n)
+
+
+/*******************************************************************************/
+/* 函数名  : RCC_Configuration                                                 */
+/* 功能    : 初始化外部时钟                                                    */
+/* 输入    : None                                                              */
+/* 输出    : None                                                              */
+/* 返回    : None                                                              */
+/********************************************************************************/
+void RCC_Configuration(void)
+{
+//----------使用外部RC晶振-----------
+RCC_DeInit(); //初始化为缺省值
+RCC_HSEConfig(RCC_HSE_ON); //使能外部的高速时钟
+while(RCC_GetFlagStatus(RCC_FLAG_HSERDY) == RESET); //等待外部高速时钟使能就绪
+FLASH_PrefetchBufferCmd(FLASH_PrefetchBuffer_Enable); //使能预取指缓存
+FLASH_SetLatency(FLASH_Latency_2); //设置FLASH存储器2延时周期
+RCC_HCLKConfig(RCC_SYSCLK_Div1); //AHB时钟等于系统时钟HCLK = SYSCLK
+RCC_PCLK2Config(RCC_HCLK_Div1); //高速AHB时钟（PCLK2）PCLK2 =  HCLK
+RCC_PCLK1Config(RCC_HCLK_Div2); //低速AHB时钟（PCLK1）PCLK1 = HCLK/2
+RCC_PLLConfig(RCC_PLLSource_HSE_Div1,RCC_PLLMul_9); //PLLCLK = 8MHZ * 9 =72MHZ
+RCC_PLLCmd(ENABLE); //Enable PLLCLK
+while(RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET); //等待 PLLCLK 准备好
+    RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK); //选择 PLL 为系统时钟
+while(RCC_GetSYSCLKSource()!=0x08); //等待系统使用PLL为系统时钟
+//---------打开相应外设时钟--------------------
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB |RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO | RCC_APB2Periph_USART1,  ENABLE );
+}
+
+
+/*******************************************************************************/
+/* 函数名  : GPIO_Configuration                                                */
+/* 功能    : 初始化GPIO外设                                                    */
+/* 输入    : None                                                              */
+/* 输出    : None                                                              */
+/* 返回    : None                                                              */
+/*******************************************************************************/
+void GPIO_Configuration(void)
+{
+GPIO_InitTypeDef GPIO;
+
+ 
+
+GPIO.GPIO_Pin =GPIO_Pin_9;
+GPIO.GPIO_Speed =GPIO_Speed_50MHz;
+GPIO.GPIO_Mode = GPIO_Mode_AF_PP;
+GPIO_Init(GPIOA,&GPIO); //端口初始化
+
+GPIO.GPIO_Pin =GPIO_Pin_10;
+
+GPIO.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+GPIO_Init(GPIOA,&GPIO); //端口初始化
+}
+
+ 
+
+ 
+
+/*******************************************************************************/
+/* 函数名  : Delay_MS                                                          */
+/* 功能    : 软件延时                                                          */
+/* 输入    : 1ms                                                               */
+/* 输出    : None                                                              */
+/* 返回    : None                                                              */
+/*******************************************************************************/
+ void Delay_MS(u16 dly)
+{
+u16 i,j;
+for(i=0;i<dly;i++)
+for(j=1000;j>0;j--);
+}
+
+
+void USART_Configuration(void) //初始化USART
+{ USART_InitTypeDef USART_InitStructure; //声明参数结构
+USART_InitStructure.USART_BaudRate =  9600; //速率9600
+USART_InitStructure.USART_WordLength =  USART_WordLength_8b; //数据长度
+USART_InitStructure.USART_StopBits =   USART_StopBits_1; //停止位
+USART_InitStructure.USART_Parity =  USART_Parity_No; //奇偶校验
+USART_InitStructure.USART_HardwareFlowControl =  USART_HardwareFlowControl_None; //硬件流
+USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx; //发送接收使能
+USART_Init(USART1, &USART_InitStructure); //根据USART_InitStruct中指定的参数初始化外设USART1寄存器
+
+USART_Cmd(USART1,ENABLE);//开启USART外设
+
+
+}
+/*******************************************************************************/
+/* 函数名  : fputc                                                              */
+/* 功能    : 重定向printf输出到USART1                                           */
+/* 输入    : int ch 字符  FILE *f 文件指针                                      */
+/* 输出    : ch                                                                 */
+/* 返回    : ch                                                                 */
+/********************************************************************************/
+
+
+int fputc(int ch,FILE *f)
+{
+//ch送给USART1
+USART_SendData(USART1, ch);
+//等待发送完毕
+while(USART_GetFlagStatus(USART1, USART_FLAG_TC)==RESET) { }
+//返回ch
+return(ch);
+}
+/*******************************************************************************/
+/* 函数名  : main                                                              */
+/* 功能    : 主函数                                                            */
+/* 输入    : None                                                              */
+/* 输出    : None                                                              */
+/* 返回    : None                                                              */
+/*******************************************************************************/
+int  main(void)
+{
+
+u8 i=58;
+RCC_Configuration();
+GPIO_Configuration();
+USART_Configuration();
+
+ 
+
+while(1)
+{
+ 
+    printf("\n\tqq 2519286938");
+printf("\n\ti value is   %d",i);
+printf("\n\ti value is   %o",i);
+printf("\n\ti value is   %d,  %d",i+i,i*i);
+printf("\n\t-----------------------------");
+
+
+}
+
+}
